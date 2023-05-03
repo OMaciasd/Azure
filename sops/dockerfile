@@ -1,0 +1,7 @@
+FROM ubuntu
+
+ADD . .
+
+RUN bash ./instAzureCLISops.sh
+
+ENTRYPOINT bash ./azure.sh;

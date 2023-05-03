@@ -1,0 +1,2 @@
+creation_rules:
+  - azure_keyvault: https://dev-kv-devops-nanaykuna.vault.azure.net/keys/sops-key/dc7611e069b64c1ea46a9dbb98452d72
