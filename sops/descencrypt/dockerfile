@@ -1,5 +1,0 @@
-FROM ubuntu
-
-ADD . .
-
-ENTRYPOINT tar -xvf azSops.tar; bash ./azSops.sh
