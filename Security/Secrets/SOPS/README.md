@@ -1,32 +1,32 @@
-# Azure: Cifrado de secretos con SOPS.
+# Azure: Cifrado de secretos con SOPS
 
-### Description.
+## Description
 
 - Un saludo, espero se encuentre bien
 - A continuación detallaremos, desde Infraestructura Digicem - CyberSecurity, la guía del paso a paso para:
 - Cifrar Secretos de repositorios o estructuras de archivos en  repos desde una llave
 
-
-## Requerimientos.
+## Requerimientos
 
 - Tener una  suscripción.
 - Tener un equipo local donde administrar cambios de repositorios y subirlos hacia  los repositorios en  DevOps, sobre Repos.
 - Contar con el archivo, repositorio o estructura a cifrar en AES256, bajo un formato JSON.
 
-
-## Guía.
+## Guía
 
 - Herramienta de almacenamiento de secretos dentro del  portal.
 - Herramienta de gestión de recursos en la nube, a nivel de IaaS, PaaS, SaaS.
 - Repos: Herramienta de gestión de pipelines en pasos por el branching strategy declarado de git-flow y trunk, entre los entornos: Dev, STA y Prod, algunos HotFixes y Features de recuperación de aplicaciones comprometidas.
 
-## Etapas.
+## Etapas
 
-### Publicaciones.
+### Publicaciones
+
 - Por favor, puedes hacer uso de la siguientes estructuras como bases para lograr el fin solicitado.
 
-#### deb_install.sh
-~~~
+### deb_install.sh
+
+~~~ BASH
 #!/usr/bin/env bash
 
 #######################################################################################################################
@@ -124,13 +124,15 @@ setup  # ensure the whole file is downloaded before executing
 ~~~
 
 #### .sops.yaml
-~~~
+
+~~~ BASH
 creation_rules:
   - azure_keyvault: https://dev-kv-devops-compañia.vault.azure.net/keys/sops-key/L1av3DeC1fr4d0
 ~~~
 
 #### dockerfile
-~~~
+
+~~~ GO
 FROM ubuntu
 
 ADD . .
@@ -145,7 +147,8 @@ curl -sL https://aka.ms/InstallAzureCLIDeb | bash;
 ~~~
 
 #### env.json
-~~~
+
+~~~ JSON
 {
     "Logging": {
             "LogLevel": {
@@ -162,7 +165,7 @@ curl -sL https://aka.ms/InstallAzureCLIDeb | bash;
             "OrganizationId": "ENC[AES256_GCM,data:PdwIcWFLBL2sus8NdEwI8AAO+VmcGkqfBpCZ1vLopvWBfRmE,iv:Ww2dArWKY4cv1z2ffHmA78CMZd/kORQPoKPQWSyBC5U=,tag:ErAJ+gxAlGdJ36Ws3+zOLw==,type:str]",
             "SellerId": "ENC[AES256_GCM,data:0w7cCUWS0sNU3CneFthqF0q7CUVp32uEifQogXIaxjYtCtmf,iv:kw4yd6rPqRNAYOQoemUEG9Zx25Es2HjvTx8m5J1R7Tc=,tag:ZkqZRBZsO3oKe3YElHi3iw==,type:str]",
             "LoginClientId": "ENC[AES256_GCM,data:u/kqNATWniIxYT0Tqr9Q/aQtBYaHfZO36JofL0gowms65hcc,iv:NAJRT9Lid0WLC85tfSoFNY2qryvD1AQLdTzoIy2jOOo=,tag:5OCPWphMwk33oTZe+F2+eg==,type:str]",
-            "LoginClientSecret": "ENC[AES256_GCM,data:Ii/dm4lvQiNfizxJk6q+qQJjc3SBApj4UuFHu1pJe9fOv+2c9zQAE4+Kbms=,iv:I3ppsz0ZclHpFj3JkRLMU6ktfk+OzSuyGvChYazuJPw=,tag:e+ODbcTjd9D2uAB2PTDevw==,type:str]"      
+            "LoginClientSecret": "ENC[AES256_GCM,data:Ii/dm4lvQiNfizxJk6q+qQJjc3SBApj4UuFHu1pJe9fOv+2c9zQAE4+Kbms=,iv:I3ppsz0ZclHpFj3JkRLMU6ktfk+OzSuyGvChYazuJPw=,tag:e+ODbcTjd9D2uAB2PTDevw==,type:str]"
     },
     "ShippingExperienceApi": {
             "BaseUrl": "ENC[AES256_GCM,data:sDe97hMZN3eOWrNsV1eHmuwXskez3qYXOmdGVAM5g8u0VkSsJZMek3oCBP8aXCTa0gFz5urr26uqhLU=,iv:tVyDwcWn4gzTAPih5uEoPu6jW4c9gNJ+CzqiPP87CTE=,tag:6a8N8tv2gz6K31VB8RoqAA==,type:str]",
@@ -171,12 +174,12 @@ curl -sL https://aka.ms/InstallAzureCLIDeb | bash;
             "GetShippingExperienceByClientRucFunctionKey": "ENC[AES256_GCM,data:aZ+WT33KSiuDw6Xxe3C14mPMxvdTSYenKZJO64ObysRt0DqT3+AuxUtwPqpn7K+CRMEVzPLVa64=,iv:+T9frU01x4bRI0bI9sFTrado+YzERPo4Rgd+HTzNnJI=,tag:E+/vNzQq+BxFkL1olZlerw==,type:str]"
     },
     "ShippingDatesApi": {
-            "BaseUrl": "ENC[AES256_GCM,data:NxKPIZoPDZQY/gpewIrbbhkufqbLUi5FOuZV84fL0nhXEFkN/yH+IxqFVhRTtzgcxxmFuU0N,iv:Xt8Dpa/7F/1vGpzE0Csfdi0qRQfwrPvadKUkSEPy1dA=,tag:YT23wN2ZH/a+EYKVGeEnNQ==,type:str]",   
+            "BaseUrl": "ENC[AES256_GCM,data:NxKPIZoPDZQY/gpewIrbbhkufqbLUi5FOuZV84fL0nhXEFkN/yH+IxqFVhRTtzgcxxmFuU0N,iv:Xt8Dpa/7F/1vGpzE0Csfdi0qRQfwrPvadKUkSEPy1dA=,tag:YT23wN2ZH/a+EYKVGeEnNQ==,type:str]",
             "GetAvailableShippingDatesFunctionKey": "ENC[AES256_GCM,data:6NzRsqMrGqr/J3/G95uHo25ZPCzj+DlFwbTKTs1UPl5i3YHzKDT3q4TJTk27y83vtGN07YTnqyU=,iv:QsnXikSZXskSKnDXkFOGVPo2Vle3sb8ucufYRXfvzoI=,tag:NERg5zQ+htxDy0YhZ2mAgA==,type:str]",
             "SaveSaleOrderShippingFunctionKey": "ENC[AES256_GCM,data:yNGe6MIFONHUMj8ufPFVm27pAmpPPmX6M6ImEcEM42LXHdc3c2OCxtyvaGSOxs5Umqa011Puf9g=,iv:kny9Mm8qzQR/Rqjt2lc85Fb4D6WsRJDuAiJLHlke01s=,tag:VC1LyfKvxPIBkFKaxw66aw==,type:str]"
     },
     "TicketManagerApi": {
-            "BaseUrl": "ENC[AES256_GCM,data:hW9j64c2u9MOs7q1hE+/1ZxhEy2kyCVkwB/m6tDSW/IMUgAUa7zcCLFl1ygHMMuwTgOMtZFA,iv:kpvhaNpN2llGBpWZXo9xIVMLwpUMgDv1YWoLXvbuUbY=,tag:NQ5273Itkll8MqZ3AetxbA==,type:str]"    
+            "BaseUrl": "ENC[AES256_GCM,data:hW9j64c2u9MOs7q1hE+/1ZxhEy2kyCVkwB/m6tDSW/IMUgAUa7zcCLFl1ygHMMuwTgOMtZFA,iv:kpvhaNpN2llGBpWZXo9xIVMLwpUMgDv1YWoLXvbuUbY=,tag:NQ5273Itkll8MqZ3AetxbA==,type:str]"
     },
     "PaymentsApi": {
             "BaseUrl": "ENC[AES256_GCM,data:dMn/Ss5k9mTVGA9ZoEJB1pmnNx7hF/GvMT06vKdfz92WtFpN9+TyXYpmyvQDkFJI,iv:jwDnfc8rDQWZummMmMHbxEhZjLVrRMMlxC63ISjRzDw=,tag:EWq/fu6R5s34vR0OeEqHzw==,type:str]",
@@ -191,12 +194,12 @@ curl -sL https://aka.ms/InstallAzureCLIDeb | bash;
             "AddLoyaltyPointTransactionFunctionKey": "ENC[AES256_GCM,data:mBqfUJoA5CiyTOqVKPxFsTJ5NkyfWw78kF/org+Dpv5Z7yQxfq4VeesaaI6rpqrfC7yQUuY6WAY=,iv:akF+L2dtR1pDHaJ0fN2gWnUFKfUuDU+IMHqUIxwm8MY=,tag:2Ok0AnJEf7J/JxBUb4nPjQ==,type:str]"
     },
     "MarketingApi": {
-            "BaseUrl": "ENC[AES256_GCM,data:sCQYyvQ9CVYkI4l5UzmpsdPqvhy56wll/I+3p64w+flc3dfuGn7OymBWMOzSf3VvXQ==,iv:ndrT1Q/p79IGLgqYWufj2zf3rZRbiD93uZwlf8aSheQ=,tag:/PYNos9whWMwSCc4iWh5fw==,type:str]",       
+            "BaseUrl": "ENC[AES256_GCM,data:sCQYyvQ9CVYkI4l5UzmpsdPqvhy56wll/I+3p64w+flc3dfuGn7OymBWMOzSf3VvXQ==,iv:ndrT1Q/p79IGLgqYWufj2zf3rZRbiD93uZwlf8aSheQ=,tag:/PYNos9whWMwSCc4iWh5fw==,type:str]",
             "GetTestimonialsFunctionKey": "ENC[AES256_GCM,data:rpYZZgpFpVLq8WnLgOvWSU8iFR7Bg53316b9ctA2ozJ4gMVT4RbBORiF69FG6b1D39iV9u8nUY4=,iv:K8byeHQzBjymsrb0POIWD1Fopl6axqJq9et56kkkgTs=,tag:AYOdHTN08UXPcplkOM7bbw==,type:str]",
             "GetNoveltiesFunctionKey": "ENC[AES256_GCM,data:GoDcuoBtJrO20rvKJiGy1Fm/JJc8UnRr9WX/nnV5g4zvMyRtx75JrdOFHxFuyKFTQVyqphd9q2w=,iv:fx9RpKgNfneeFxbiveX8kFwcXsB6x5Rq9X4PwMS3HlE=,tag:HaWmB7uKr/dA3wLSFHUNPw==,type:str]"
     },
     "NotificationsApi": {
-            "BaseUrl": "ENC[AES256_GCM,data:BviIjbk9rlhE1QbaypQTPSmVP3hz2nhcg3Hs4m4FrVKJbQYy5uJMwb+6gyGdTQ+EY87dmg==,iv:meHaeQci6lSoTWHF7jvbrcKcSr/N9v1WPbcbMrnlxno=,tag:OozZjAlSjorb4PDyn4wJ9g==,type:str]",   
+            "BaseUrl": "ENC[AES256_GCM,data:BviIjbk9rlhE1QbaypQTPSmVP3hz2nhcg3Hs4m4FrVKJbQYy5uJMwb+6gyGdTQ+EY87dmg==,iv:meHaeQci6lSoTWHF7jvbrcKcSr/N9v1WPbcbMrnlxno=,tag:OozZjAlSjorb4PDyn4wJ9g==,type:str]",
             "SendOrderClaimEmailFunctionKey": "ENC[AES256_GCM,data:bj4fYNiZwNqpH/E4H0WYTwoR2gWiq0iyVOqfNnHIshMu/UIN5XFk71U0qo+FrRxRER3wUkO2Jbs=,iv:ofta4k9lovGO31qi9z02JzWs2BweOLrufvN843n3WV0=,tag:W90+e2caS+hp9lkDHkQy6g==,type:str]",
             "SendWelcomeClientCreatedEmailFunctionKey": "ENC[AES256_GCM,data:O6AVq3jlQWHQRvcoUIURh5sDq8hpo/VncG/MeQZgGLbQpxl3vu7pb0C2C+6ew9IVnZLsD7/m7GY=,iv:6ftX/gvo2DUH/vWIR8AxX1VoPxUVoBhTwdzdckeFoRI=,tag:6UXdR/KijiPCgTWIdMuA7w==,type:str]"
     },
@@ -284,14 +287,16 @@ curl -sL https://aka.ms/InstallAzureCLIDeb | bash;
 }
 ~~~
 
-### Construcción.
+### Construcción
+
 - Por favor, puedes hacer uso de la siguiente sentencia para construir tu proyecto.
 
-#### Comandos Docker.
+#### Comandos Docker
 
-~~~
+~~~ GO
 docker build -t name-tag . --no-cache
 ~~~
+
 - **docker:** API.
 - **build:** Construir a imagen desde la API.
 - **t:** Etiqueta para la imagen.
@@ -299,42 +304,48 @@ docker build -t name-tag . --no-cache
 - **.:** Ruta de despliegue.
 - **--no-cache:** Elimina al final el cache de carga en construcción, para evitar podar ese recurso en memoria más tarde, via manual.
 
-### Pruebas.
+### Pruebas
+
 - Por favor, puedes hacer uso de las siguientes sentencias para validar accesos a los recursos y la herramienta.
 
-#### Comandos.
+#### Comandos
 
-~~~
+~~~ BASH
 az login
 ~~~
+
 - **az:** API.
 - **login:** Inicio de sesion sobre la plataforma , en una ventana aparte bajo un código de validación.
 
-~~~
+~~~ BASH
 export AZURE_CLIENT_ID="AzUr3-C1eNt-1D"
 ~~~
+
 - **export:** Declara la variable en sistemas operativos Unix igual Linux.
 - **AZURE_CLIENT_ID:** Nombre de variable a setear.
 - **=:** Operador lógico del valor de la variable.
 - **"AzUr3-C1eNt-1D":** Valor de la variable a retornar, al ser llamada.
 
-~~~
+~~~ BASH
 export AZURE_CLIENT_SECRET="AzUr3-C1eNt-5E(r3T";
 ~~~
+
 - **;:** Operador de salto de sentencia en línea.
 
-~~~
+~~~ BASH
 export AZURE_TENANT_ID="AzUr3-T3n4Nt-1D"
 ~~~
 
-### Desplegar.
+### Desplegar
+
 - Por favor, puedes hacer uso de las siguientes sentencias para validar accesos a los recursos y la herramienta.
 
-#### Comandos.
+#### Comandos SOPS
 
-~~~
+~~~ BASH
 sops -e env.json > env.enc.dev2; cat env.enc.dev2"
 ~~~
+
 - **sops:** Herramienta de cifrado.
 - **-e:** Parámetro o argumento de cifrar secretos.
 - **env.json:** Archivo o estructura a cifrar.
