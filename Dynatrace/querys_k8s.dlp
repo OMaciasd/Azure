@@ -1,5 +1,13 @@
-#Kubernetes.
+# Kubernetes.
 
 builtin:kubernetes.containers:filter(and(contains("k8s.namespace.name",$NAMESPACE_PREFIX_PROD),or(eq("k8s.workload.name",api-articulo),eq("k8s.workload.name","$API_NAME"),eq("k8s.workload.name","$API_NAME_2")))):splitBy("k8s.namespace.name","k8s.workload.name","k8s.cluster.name"):sum:sort(value(sum,descending))
 
 builtin:kubernetes.containers:filter(and(contains("k8s.namespace.name",$NAMESPACE_PREFIX_STG),or(eq("k8s.workload.name","$API_NAME")))):splitBy("k8s.namespace.name","k8s.workload.name","k8s.cluster.name"):sum:sort(value(sum,descending))
+
+
+# Kubernetes - real pods.
+
+builtin:kubernetes.pods:filter(and(or(in("dt.entity.cloud_application_namespace",entitySelector("type(cloud_application_namespace),entityName(~"prod~")"))),
+or(in("dt.entity.cloud_application",entitySelector("type(cloud_application),entityName.equals(~"api-name~")"))
+,in("dt.entity.cloud_application",entitySelector("type(cloud_application),entityName.equals(~"api-name-2~")"))
+))):splitBy("dt.entity.cloud_application","k8s.namespace.name"):sort(value(auto,descending))
